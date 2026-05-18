@@ -1,63 +1,65 @@
-# Proje Mr. Sina: Kuantum Görüntü İşleme ve Varyasyonel QML ile 3B Nörogörüntüleme Tabanlı Klinik Karar Destek Sistemi
+# Project Mr. Sina: Quantum-Enhanced 3D Neuroimaging and Clinical Decision Support System
 
-[![Etkinlik: QIntern 2026](https://img.shields.io/badge/Etkinlik-QIntern_2026-blue.svg)](https://qworld.net/qintern-2026/)
-[![Durum: Geliştirme Aşamasında](https://img.shields.io/badge/Durum-Proje_Teklifi_--_Ar--Ge-orange.svg)]()
-[![Alan: Medikal Yapay Zekâ & Kuantum](https://img.shields.io/badge/Alan-QIP_%7C_QML_%7C_N%C3%B6rog%C3%B6r%C3%BCnt%C3%BCleme-green.svg)]()
+[![Event: QIntern 2026](https://img.shields.io/badge/Event-QIntern_2026-blue.svg)](https://qworld.net/qintern-2026/)
+[![Status: Research & Development](https://img.shields.io/badge/Status-Proposal_%26_R%26D-orange.svg)]()
+[![Live Demo: Web App](https://img.shields.io/badge/Live_App-Mr._Sina_Web-success.svg)](https://mrsina.up.railway.app/)
 
-## 📌 Proje Özeti (Abstract)
+## 🌐 Live Web Application
+You can access the current classical deployment of our Clinical Decision Support System interface here: 
+**[Mr. Sina Web Application](https://mrsina.up.railway.app/)**
 
-Proje Mr. Sina; Bipolar Bozukluk ve Şizofreni gibi kronik psikiyatrik hastalıkların objektif, erken ve kişiselleştirilmiş teşhisi için geliştirilmiş yapay zekâ destekli bir Klinik Karar Destek Sistemidir (KKDS). 
+## 📌 Abstract
+Project Mr. Sina is an AI-driven Clinical Decision Support System (CDSS) designed for the objective, early, and personalized diagnosis of chronic psychiatric disorders, particularly Bipolar Disorder and Schizophrenia. 
 
-Bu araştırma deposu, mevcut asenkron ve otomatik klasik nörogörüntüleme boru hattımızı (dcm2niix, FSL, FreeSurfer); **Kuantum Görüntü İşleme (QIP)**, **Kuantum Makine Öğrenmesi (QML)** ve **Kuantum Yaklaşık Optimizasyon Algoritması (QAOA)** katmanlarıyla entegre ederek NISQ (Gürültülü Orta Ölçekli Kuantum) dönemine taşımayı hedeflemektedir. Proje, voksel düzeyinde kuantum görüntü iyileştirmeden başlayarak sürekli zamanlı kuantum dinamik sistem modellemesine kadar uçtan uca hibrit bir medikal mimari sunar.
+This research repository aims to transition our existing, fully automated classical neuroimaging pipeline into the NISQ (Noisy Intermediate-Scale Quantum) era. By integrating **Quantum Image Processing (QIP)**, **Quantum Machine Learning (QML)**, and **Quantum Approximate Optimization Algorithm (QAOA)**, this project presents an end-to-end hybrid medical architecture—from voxel-level quantum image enhancement to continuous-time quantum dynamic system modeling.
 
-## ⚙️ 1. Mevcut Klasik Altyapı (Completed Baseline Pipeline)
+## ⚙️ 1. Completed Baseline (Classical Pipeline)
+In the first phase of the project, we successfully established an automated Linux (Ubuntu/WSL) pipeline that extracts high-dimensional anatomical features from raw brain MRI scans (DICOM):
 
-Projenin ilk fazında, ham beyin MR görüntülerinden (DICOM) yüksek boyutlu anatomik öznitelikler çıkaran otomatik bir Linux (Ubuntu/WSL) boru hattı başarıyla kurulmuştur:
-
-| Aşama | Kullanılan Araç / Komut | Gerçekleştirilen İşlem |
+| Stage | Tool / Command | Description |
 | :--- | :--- | :--- |
-| **Veri Dönüşümü** | `dcm2niix` | Ham hastane DICOM verilerinin tıbbi görüntüleme standardı olan 3B NIfTI (`.nii.gz`) formatına dönüştürülmesi. |
-| **Kafası Temizleme** | FSL `bet` (Brain Extraction Tool) | Yapısal MR görüntülerinden kafatası, göz ve boyun gibi beyin dışı dokuların asenkron olarak temizlenmesi. |
-| **Görüntü Hizalama** | FSL `flirt` | Görüntülerin standart bir anatomik şablona (MNI152) uzamsal olarak hizalanması ve tescili (registration). |
-| **Segmentasyon** | FreeSurfer `recon-all` | Beyin kabuğunun (korteks) gri/beyaz madde sınırlarının ayrılması, kortikal kalınlık ölçümü ve derin beyin yapılarının (Amigdala, Hipokampus vb.) hacimsel segmentasyonu. |
-| **Öznitelik Çıkarımı** | `asegstats2table` & `aparcstats2table` | Yüzlerce anatomik ölçümün, makine öğrenmesi modellerinde girdi olarak kullanılmak üzere sayısal matris tablolara dönüştürülmesi. |
+| **Data Conversion** | `dcm2niix` | Converts raw hospital DICOM data into the 3D NIfTI (`.nii.gz`) medical imaging standard. |
+| **Skull Stripping** | FSL `bet` | Asynchronously removes non-brain tissues (skull, eyes, neck) from structural MRI scans. |
+| **Image Registration** | FSL `flirt` | Spatially aligns and registers images to a standard anatomical template (MNI152). |
+| **Segmentation** | FreeSurfer `recon-all` | Separates gray/white matter boundaries, measures cortical thickness, and performs volumetric segmentation of deep brain structures (e.g., Amygdala, Hippocampus). |
+| **Feature Extraction** | `asegstats2table` & `aparcstats2table` | Transforms hundreds of anatomical measurements into numerical matrices for machine learning ingestion. |
 
-## 🚀 2. Önerilen Kuantum Modülleri ve Metodoloji
+## 🚀 2. Proposed Quantum Modules & Methodology
+To surpass the limitations of classical deep learning, we are integrating three core quantum layers into the Mr. Sina framework:
 
-Projenin ikinci fazında, klasik derin öğrenme yaklaşımlarındaki sınırları aşmak amacıyla üç temel kuantum katmanı sisteme entegre edilmektedir:
+### A. Quantum Image Processing (QIP)
+* **Quantum State Preparation:** 3D structural MRI data will be encoded into quantum states (using amplitude and angle embeddings) via FRQI or NEQR algorithms.
+* **Quantum Voxel Enhancement:** Specialized quantum-domain filters will be designed to suppress microstructural noise and enhance gray-matter contrast in deep subcortical regions where classical filters fall short.
 
-### A. Kuantum Görüntü İşleme (Quantum Image Processing - QIP)
-* **Kuantum Durum Hazırlama:** 3 boyutlu yapısal MRG verileri, FRQI (Flexible Representation of Quantum Images) veya NEQR (Novel Enhanced Quantum Representation) algoritmaları kullanılarak kuantum durumlarına (genlik ve açı gömmeleriyle) kodlanacaktır.
-* **Kuantum Voksel İyileştirme:** Klasik filtrelerin yetersiz kaldığı mikroyapısal gürültüleri bastırmak ve derin beyin yapılarındaki (Hipokampus, Amigdala) gri madde kontrastını artırmak için kuantum alanında çalışan özel voksel filtreleri tasarlanacaktır.
+### B. Quantum Machine Learning (QML) & Continuous-Time Modeling
+* **Quantum Convolutional Neural Networks (QCNN):** Parameterized Quantum Circuits (PQCs) will be developed to capture spatial features from dimensionality-optimized 3D MR images.
+* **Quantum Neural ODEs (Q-ODEs):** Building on our expertise in deep learning for dynamic systems, we will model the longitudinal structural decay trajectories of psychiatric diseases using continuous-time Q-ODEs, solving differential equations via quantum circuits.
 
-### B. Kuantum Makine Öğrenmesi (QML) ve Sürekli Zamanlı Modelleme
-* **Kuantum Evrişimli Sinir Ağları (QCNN):** Boyutsallığı kuantum durum hazırlığı ile optimize edilmiş 3B MR görüntülerinden uzamsal öznitelikleri yakalamak için parametreli kuantum devreleri (PQC) içeren QCNN mimarileri geliştirilecektir.
-* **Kuantum Neural ODE'ler (Q-ODEs):** Dinamik sistemlerdeki derin öğrenme deneyimlerimize dayanarak, psikiyatrik hastalıkların beyindeki boyutsal ve boylamsal (longitudinal) yapısal değişim yörüngelerini, diferansiyel denklemleri kuantum devreleriyle çözen sürekli zamanlı Kuantum Neural ODE'ler ile modelleyeceğiz.
+### C. Quantum Optimization for Mathematical Biomarker Selection
+* **QUBO Formulation:** The problem of selecting the most diagnostically sensitive clinical biomarkers from high-dimensional FreeSurfer outputs (cortical thickness and volume) will be transformed into a Quadratic Unconstrained Binary Optimization (QUBO) model.
+* **QAOA Implementation:** To alleviate the computational bottleneck of traditional MILP (Mixed-Integer Linear Programming) models, the QUBO matrix will be solved using QAOA to determine the optimal subset of predictive features.
 
-### C. Matematiksel Biyobelirteç Seçimi için Kuantum Optimizasyonu
-* **QUBO Formülasyonu:** FreeSurfer çıktılarından elde edilen yüksek boyutlu kortikal kalınlık ve hacim verileri arasından, tanısal hassasiyeti en yüksek olan klinik biyobelirteçlerin seçilmesi problemi Kısıtsız İkinci Dereceden İkili Optimizasyon (QUBO) modeline dönüştürülecektir.
-* **QAOA Uygulaması:** Geleneksel MILP (Karışık Tam Sayılı Doğrusal Programlama) modellerinin işlem yükünü hafifletmek adına, QUBO matrisi QAOA algoritması kullanılarak çözülecek ve en optimum alt öznitelik seti belirlenecektir.
+## 📂 Repository Structure
 
-## 📂 Depo Mimarisi (Repository Structure)
+* `pipeline/`: Automation scripts for DICOM-NIfTI conversion, FSL skull stripping, and FreeSurfer `recon-all`.
+* `qip/`: Circuits for 3D MRI amplitude encoding and quantum contrast filtering.
+* `qml/`: QCNN architectures, Physics-Informed Quantum Neural Networks (Q-PINNs), and Quantum Neural ODE prototypes.
+* `optimization/`: QUBO matrices and QAOA optimization scripts for clinical data.
+* `web_app/`: Source code for the FastAPI/Python backend serving the [live application](https://mrsina.up.railway.app/).
+* `docs/`: Academic reports, pitch decks, and medical/quantum mathematical foundations.
 
-* `pipeline/`: DICOM-NIfTI dönüşümü, FSL kafatası temizleme ve FreeSurfer `recon-all` otomasyon betikleri (`hepsini_isle.sh`).
-* `qip/`: 3B MRG verilerinin kuantum genlik kodlama (amplitude encoding) ve kuantum kontrast filtreleme devreleri.
-* `qml/`: QCNN mimarileri, Kuantum Fizik Bilgili Sinir Ağları (Q-PINNs) ve Kuantum Neural ODE prototipleri.
-* `optimization/`: Klinik veriler için oluşturulan QUBO matrisleri ve QAOA optimizasyon betikleri.
-* `docs/`: Projenin tıp ve kuantum matematiği temellerini açıklayan akademik raporlar, sunum dosyaları (Pitch Decks).
+## 🛠️ Tech Stack
 
-## 🛠️ Teknoloji Yığını (Tech Stack)
+* **Neuroimaging:** FreeSurfer, FSL (FMRIB Software Library), dcm2niix
+* **Quantum Computing:** PennyLane, Qiskit
+* **Deep Learning & Dynamic Systems:** PyTorch, Torchdiffeq
+* **Web & Data Science:** Python, FastAPI, NumPy, Pandas, Railway (Deployment)
 
-* **Nörogörüntüleme:** FreeSurfer, FSL (FMRIB Software Library), dcm2niix
-* **Kuantum Hesaplama & Simülasyon:** PennyLane, Qiskit
-* **Derin Öğrenme & Dinamik Sistemler:** PyTorch, Torchdiffeq
-* **Veri Bilimi ve Altyapı:** Ubuntu/WSL, Python, NumPy, Pandas
+## 👨‍💻 Research Team & Contacts
 
-## 👨‍💻 Araştırma Ekibi ve İletişim
-
-* **Hamza Derim** - *Proje Kaptanı / Veri Bilimi ve Yapay Zekâ Uzmanı*
-* **Doç. Dr. Çiğdem Özer** - *Radyoloji Uzmanı / Akademik Danışman*
-* **Dr. Ekrem Furkan Uçak** - *Psikiyatrist / Klinik Danışman*
+* **Hamza Derim** - *Project Captain / Data Science & AI Specialist*
+* **Assoc. Prof. Çiğdem Özer** - *Radiologist / Academic Advisor*
+* **Dr. Ekrem Furkan Uçak** - *Psychiatrist / Clinical Advisor*
 
 ---
-*Proje Mr. Sina, kuantum görüntü işleme ve uygulamalı matematiksel optimizasyon yöntemlerinin klinik psikiyatrideki dönüştürücü gücünü kanıtlamak adına QIntern 2026 kapsamında ileri düzey Ar-Ge çalışmalarına devam etmektedir.*
+*Project Mr. Sina is advancing through advanced R&D under QIntern 2026 to demonstrate the transformative power of quantum image processing and applied mathematical optimization in clinical psychiatry.*
